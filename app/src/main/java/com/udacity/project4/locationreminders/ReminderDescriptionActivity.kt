@@ -9,9 +9,6 @@ import com.udacity.project4.R
 import com.udacity.project4.databinding.ActivityReminderDescriptionBinding
 import com.udacity.project4.locationreminders.reminderslist.ReminderDataItem
 
-/**
- * Activity that displays the reminder details after the user clicks on the notification
- */
 class ReminderDescriptionActivity : AppCompatActivity() {
 
     companion object {
