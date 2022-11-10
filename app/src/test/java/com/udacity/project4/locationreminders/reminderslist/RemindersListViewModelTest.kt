@@ -9,6 +9,7 @@ import com.udacity.project4.getOrAwaitValue
 import com.udacity.project4.locationreminders.data.dto.ReminderDTO
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.pauseDispatcher
+import org.hamcrest.CoreMatchers
 import org.hamcrest.core.IsEqual
 import org.hamcrest.core.IsNot.not
 import org.junit.After
@@ -84,6 +85,19 @@ class RemindersListViewModelTest {
         remindersListViewModel.loadReminders()
 
         assertThat(remindersListViewModel.remindersList.getOrAwaitValue() , IsEqual(emptyList<ReminderDTO>()))
+    }
+
+    @Test
+    fun loadNullAndShowError(){
+
+        reminderDataSource.setReturnError(true)
+
+        remindersListViewModel.loadReminders()
+
+        assertThat(remindersListViewModel.showSnackBar.getOrAwaitValue(),
+            CoreMatchers.`is`("Test exception")
+        )
+
     }
 
     @Test
