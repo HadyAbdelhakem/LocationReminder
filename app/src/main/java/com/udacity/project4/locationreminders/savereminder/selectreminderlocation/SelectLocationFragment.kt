@@ -97,10 +97,6 @@ class SelectLocationFragment : BaseFragment() {
         _viewModel.reminderSelectedLocationStr.value = locStr
 
         findNavController().navigate(R.id.action_selectLocationFragment_to_saveReminderFragment)
-
-        //        TODO: When the user confirms on the selected location,
-        //         send back the selected location details to the view model
-        //         and navigate back to the previous fragment to save the reminder and add the geofence
     }
 
 
@@ -202,16 +198,9 @@ class SelectLocationFragment : BaseFragment() {
                     )
                 } != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return
             }
-            map.setMyLocationEnabled(true)
+            map.isMyLocationEnabled = true
         }
         else {
             activity?.let {
