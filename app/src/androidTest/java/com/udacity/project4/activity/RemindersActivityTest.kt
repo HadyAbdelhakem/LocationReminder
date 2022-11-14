@@ -11,6 +11,7 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.udacity.project4.R
@@ -42,8 +43,6 @@ class RemindersActivityTest : AutoCloseKoinTest() {
 
     private lateinit var reminderDataSource: ReminderDataSource
     private lateinit var appContext: Application
-
-    private val dataBindingIdlingResource = DataBindingIdlingResource()
 
     @Before
     fun setup(){
@@ -78,8 +77,20 @@ class RemindersActivityTest : AutoCloseKoinTest() {
             reminderDataSource.deleteAllReminders()
         }
 
+    }
+
+    private val dataBindingIdlingResource = DataBindingIdlingResource()
+
+    @Before
+    fun registerIdlingResource() {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
         IdlingRegistry.getInstance().register(dataBindingIdlingResource)
+    }
+
+    @After
+    fun unregisterIdlingResource() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
+        IdlingRegistry.getInstance().unregister(dataBindingIdlingResource)
     }
 
     private fun getActivity(activityScenario: ActivityScenario<RemindersActivity>) : Activity {
@@ -157,19 +168,23 @@ class RemindersActivityTest : AutoCloseKoinTest() {
 
         Espresso.onView(withId(R.id.saveReminder)).perform(ViewActions.click())
 
-        Espresso.onView(ViewMatchers.withText(R.string.reminder_saved)).inRoot(
-            RootMatchers.withDecorView(
-                CoreMatchers.not(
-                    CoreMatchers.`is`(getActivity(activityScenario).window.decorView)
+        Espresso.onView(withText(R.string.reminder_saved))
+            .inRoot(
+                RootMatchers.withDecorView(
+                    CoreMatchers.not(
+                        CoreMatchers.`is`(
+                            getActivity(
+                                activityScenario
+                            ).window.decorView
+                        )
+                    )
                 )
             )
-        ).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+
+        activityScenario.close()
     }
 
-    @After
-    fun unregisterIdlingResource() {
-        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
-        IdlingRegistry.getInstance().unregister(dataBindingIdlingResource)
-    }
+
 
 }

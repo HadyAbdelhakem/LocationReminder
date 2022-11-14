@@ -21,10 +21,7 @@ class FakeDataSource(var reminders: MutableList<ReminderDTO>? = mutableListOf())
         if (shouldReturnError){
             return Error("Test exception")
         }
-
-        reminders?.let { return Success(ArrayList(it)) }
-
-        return Success(listOf())
+        return Success(ArrayList(reminders as ArrayList<ReminderDTO>))
 
     }
 
@@ -38,15 +35,16 @@ class FakeDataSource(var reminders: MutableList<ReminderDTO>? = mutableListOf())
             return Error("Test exception")
         }
 
-        reminders?.firstOrNull() { it->it.id == id }?.let {
-            return Success(it)
+        val reminder = reminders?.find { it.id == id }
+        return if(reminder != null){
+            Success(reminder)
+        }else {
+            Error("Did not find Reminder")
         }
-
-        return Error("Reminder not found!")
-
     }
 
     override suspend fun deleteAllReminders() {
         reminders?.clear()
     }
 }
+

@@ -12,7 +12,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import com.udacity.project4.R
-//import android.synthetic.main.activity_reminders.*
 
 /**
  * The RemindersActivity that holds the reminders fragments
@@ -29,8 +28,8 @@ class RemindersActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                val nav_host_fragment = findViewById<View>(R.layout.activity_reminders)
-                (nav_host_fragment as NavHostFragment).navController.popBackStack()
+                val navHostFragment = findViewById<View>(R.layout.activity_reminders)
+                (navHostFragment as NavHostFragment).navController.popBackStack()
                 return true
             }
         }

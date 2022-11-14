@@ -48,10 +48,13 @@ class GeofenceTransitionsJobIntentService : JobIntentService(), CoroutineScope {
             geofencingEvent.triggeringGeofences?.let { sendNotification(it) }
 
         }
+        else {
+            Log.e("GeofenceTransitionError..  ", "Geofence transition error")
+        }
     }
 
-    private fun sendNotification(triggeringGeofences: List<Geofence>){
-        for (triggeringGeofence in triggeringGeofences) {
+    private fun sendNotification(triggeringGeoFences: List<Geofence>){
+        for (triggeringGeofence in triggeringGeoFences) {
             val requestId = triggeringGeofence.requestId
             Log.d("notification", "send notification true")
 
