@@ -3,10 +3,16 @@ package com.udacity.project4.locationreminders.reminderslist
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.*
 import android.widget.Toast
+import androidx.core.location.LocationManagerCompat
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.library.BuildConfig
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.udacity.project4.R
 import com.udacity.project4.authentication.AuthenticationActivity
@@ -52,7 +58,15 @@ class ReminderListFragment : BaseFragment() {
         binding.lifecycleOwner = this
         setupRecyclerView()
         binding.addReminderFAB.setOnClickListener {
-            navigateToAddReminder()
+            if(isLocationEnabled(requireContext())){
+                navigateToAddReminder()
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    R.string.location_required_error, Snackbar.LENGTH_INDEFINITE
+                ).setAction(android.R.string.ok) {}
+                    .show()
+            }
         }
     }
 
@@ -99,5 +113,11 @@ class ReminderListFragment : BaseFragment() {
 //        display logout as menu item
         inflater.inflate(R.menu.main_menu, menu)
     }
+
+    private fun isLocationEnabled(context: Context): Boolean {
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return LocationManagerCompat.isLocationEnabled(locationManager)
+    }
+
 
 }

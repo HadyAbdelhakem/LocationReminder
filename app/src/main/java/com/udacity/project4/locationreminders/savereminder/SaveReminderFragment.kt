@@ -64,10 +64,6 @@ class SaveReminderFragment : BaseFragment() {
         PendingIntent.getBroadcast(activity, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
-    /*private val REQUEST_FOREGROUND_AND_BACKGROUND_PERMISSION_RESULT_CODE = 3
-    private val REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE = 4
-    private val REQUEST_TURN_DEVICE_LOCATION_ON = 5*/
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
