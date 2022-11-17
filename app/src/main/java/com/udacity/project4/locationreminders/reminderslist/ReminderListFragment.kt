@@ -58,15 +58,7 @@ class ReminderListFragment : BaseFragment() {
         binding.lifecycleOwner = this
         setupRecyclerView()
         binding.addReminderFAB.setOnClickListener {
-            if(isLocationEnabled(requireContext())){
-                navigateToAddReminder()
-            } else {
-                Snackbar.make(
-                    binding.root,
-                    R.string.location_required_error, Snackbar.LENGTH_INDEFINITE
-                ).setAction(android.R.string.ok) {}
-                    .show()
-            }
+            navigateToAddReminder()
         }
     }
 
@@ -114,10 +106,10 @@ class ReminderListFragment : BaseFragment() {
         inflater.inflate(R.menu.main_menu, menu)
     }
 
-    private fun isLocationEnabled(context: Context): Boolean {
+    /*private fun isLocationEnabled(context: Context): Boolean {
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return LocationManagerCompat.isLocationEnabled(locationManager)
-    }
+    }*/
 
 
 }
