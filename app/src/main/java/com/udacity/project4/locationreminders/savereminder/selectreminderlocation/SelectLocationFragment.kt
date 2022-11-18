@@ -215,11 +215,7 @@ class SelectLocationFragment : BaseFragment() {
                     binding.root,
                     R.string.location_required_error, Snackbar.LENGTH_INDEFINITE
                 ).setAction(android.R.string.ok) {
-                    /*startActivity(Intent().apply {
-                        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                        data = Uri.fromParts("package", com.udacity.project4.BuildConfig.APPLICATION_ID, null)
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    })*/
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
                 }
                     .show()
             }
